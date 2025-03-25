@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './calculator-ui.component.css'
 })
 export class CalculatorUIComponent {
-
+    add(a:string,vfd:string): number{
+      return 0;
+    }
 }

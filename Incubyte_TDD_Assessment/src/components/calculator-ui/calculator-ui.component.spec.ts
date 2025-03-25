@@ -18,6 +18,9 @@ describe('CalculatorUIComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    // expect(component).toBeTruthy();
+    const result = component.add('2', '3');
+    expect(result).toBe(5);
+
   });
 });
