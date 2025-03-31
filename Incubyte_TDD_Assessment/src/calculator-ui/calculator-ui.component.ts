@@ -15,37 +15,54 @@ import { NgIf } from '@angular/common';
   styleUrl: './calculator-ui.component.css'
 })
 export class CalculatorUIComponent implements OnInit {
+
   inputTextValue: string = '';
   Result: string = '';
   ResultNum: number = 0;
   ShowResult: boolean = false;
+  readonly regex = /^(\d+([,\n]\d+)*)$/;
+
 
   ngOnInit() {
     this.ShowResult = false;
   }
-  
-  checkString(inputString:string):boolean{
-    return false;
+
+  checkString(inputString: string): boolean {
+    if (this.regex.test(inputString)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   add(a: string): any {
+    a = a.replaceAll('\\n','\n');
     this.Result = '';
     this.ResultNum = 0;
     let splitted: string[] = [];
     //Check if string is not empty
     if (a.length > 1) {
-      splitted = a.split(',');
-      // Split String using \n and comma any of this
-      splitted.forEach(item => {
-        this.ResultNum += parseInt(item);
-      });
-      this.Result = this.ResultNum.toString();
-      this.ShowResult = true;
+      if (this.checkString(a)) {
+        // splitted = a.split(','); 
+        splitted = a.split(/[,\n]+/);
+        // Split String using \n and comma any of this
+        splitted.forEach(item => {
+          this.ResultNum += parseInt(item);
+        });
+        this.Result = this.ResultNum.toString();
+        this.ShowResult = true;
+        return this.Result;
+      } else {
+        this.Result = 'Invalid String';
+        this.ShowResult = true;
+        return 'Invalid String';
+      }
     }
     //Check if string has only one string
     else if (a.length == 1) {
       this.Result = a;
       this.ShowResult = true;
+      return a;
     }
     //String is empty
     else {

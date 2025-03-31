@@ -27,30 +27,32 @@ describe('CalculatorUIComponent', () => {
   it('One number string', () => {
     // expect(component).toBeTruthy();
     const result = component.add('1');
-    expect(result).toBe(1);
+    expect(result).toBe('1');
   });
 
   //Take two number as input 
   it('2 numbers String ', () => {
     const result = component.add('1,2');
-    expect(result).toBe(3);
+    expect(result).toBe('3');
   });
 
   //Take infininte numbers as input 
   it('Infinite numbers string', () => {
     const result = component.add('1,2,3,4,5,6,7,8,9');
-    expect(result).toBe(45);
+    expect(result).toBe('45');
   });
-
-  it('Infinite numbers string', () => {
-    const result = component.add('1,2,3,4,5,6,7,8,9');
-    expect(result).toBe(45);
-  });
-
   // Step 2, accepting /n and , as seperators
-  it('Check string for valid including only , & next line escape sequence', () => {
+  it('Check string for valid including only , & next line escape sequence only', () => {
     const result = component.checkString('1,3\n4');
     expect(result).toBe(true);
+  });
+  it('Split parameter using multiple delimiters', () => {
+    const result = component.add('1,3\n4,5\n6');
+    expect(result).toBe('19');
+  });
+  it('Check if only 2 delimeters used ', () => {
+    const result = component.add('1,3\n4,5\h6');
+    expect(result).toBe('Invalid String');
   });
   // it('Check string to be invalid for any other seperator except for comma and next line escape sequence', () => {
   //   const result = component.checkString('1,3\h4');
