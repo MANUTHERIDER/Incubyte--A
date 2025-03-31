@@ -21,7 +21,7 @@ export class CalculatorUIComponent implements OnInit {
   ResultNum: number = 0;// Show result
   ShowResult: boolean = false;// Show result element only when availiable
   customDelimiterMatch: any = false;// Used to check if custoem delimiter availiable.
-
+  isNegativeFound: any; // Used to check if negative numbers are present in the string.
   readonly regex = /^(\d+([,\n]\d+)*)$/;
 
 
@@ -37,6 +37,10 @@ export class CalculatorUIComponent implements OnInit {
     }
   }
 
+   findNegativeNumbers(SplittedValue: number[]): number[] {
+    return SplittedValue.filter(num => num < 0);
+}
+
   add(a: string): any {
     a = a.replaceAll('\\n', '\n');
     this.Result = '';
@@ -47,17 +51,28 @@ export class CalculatorUIComponent implements OnInit {
     //Check if string is not empty
     if (a.length > 1) {
       if (a.startsWith("//")) {
-        const match = a.match(/^\/\/(.+)\n/); // Regex to extract custom delimiter
+        // const match = a.match(/^\/\/(.+)\n/); // Regex to extract custom delimiter
+       //^\/\/(.+)\n(\d+(\1\d+)*)$
+        const match = a.match(/^\/\/(.+)\n(\d+(\1\d+)*)$/); // Regex to extract custom delimiter
         if (match) {
           delimiter = new RegExp(match[1]); // Use the captured delimiter
-          a = a.substring(match[0].length); // Remove delimiter declaration
+          // a = a.substring(match[1].length); // Remove delimiter declaration
+          a= a.substring(a.indexOf('\n'));
           splitted = a.split(delimiter); // Split the string using the determined delimiter
-          splitted.forEach(item => {
-            this.ResultNum += parseInt(item); // Sum up the numbers
-          });
-          this.Result = this.ResultNum.toString();
-          this.ShowResult = true;
-          return this.Result;
+          this.isNegativeFound = this.findNegativeNumbers(splitted.map(item => parseInt(item)));
+          if (this.isNegativeFound.length > 0) {
+            this.Result = `Negative numbers not allowed: ${this.isNegativeFound.join(', ')}`;
+            // this.Result = 'Negative numbers not allowed';
+            this.ShowResult = true;
+          } else {
+            splitted.forEach(item => {
+              this.ResultNum += parseInt(item); // Sum up the numbers
+            });
+            this.Result = this.ResultNum.toString();
+            this.ShowResult = true;
+            return this.Result;
+          }
+
         } else {
           this.Result = 'Invalid Syntax for Custom Delimiter';
           this.ShowResult = true;
