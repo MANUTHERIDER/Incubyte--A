@@ -60,6 +60,7 @@ describe('CalculatorUIComponent', () => {
     expect(result).toBe('11');
   });
 
+  
   it('Check custom delimeters negative numbers ', () => {
     const result = component.add('//%\n1%-2%-3%-5%6%7');
     expect(result).toBe('Invalid Syntax for Custom Delimiter');
