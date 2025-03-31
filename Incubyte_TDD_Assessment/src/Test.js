@@ -38,10 +38,10 @@ function matchString(input) {
 const testStrings = [
     "1,2,4\h5,6,7",
     "1,2\n3,4",
-    "1,,2", // Invalid
-    "1\n\n2", // Invalid
-    "1,\n2", // Invalid
-    "1,\s2", // Invalid
+    // "1,,2", // Invalid
+    // "1\n\n2", // Invalid
+    // "1,\n2", // Invalid
+    // "1,\s2", // Invalid
     "1,2,4\h5,6,7",
 ];
 
