@@ -56,7 +56,7 @@ describe('CalculatorUIComponent', () => {
   });
   // Step 4 Support different delimiters: 
   it('Check custome delimeters used ', () => {
-    const result = component.add('//%\n1%2%3\n4%5');
-    expect(result).toBe(true);
+    const result = component.add('//%\n1%2%3%5');
+    expect(result).toBe('11');
   });
 });

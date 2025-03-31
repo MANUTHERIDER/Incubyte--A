@@ -20,7 +20,7 @@ export class CalculatorUIComponent implements OnInit {
   Result: string = '';// Calculate result
   ResultNum: number = 0;// Show result
   ShowResult: boolean = false;// Show result element only when availiable
-  customDelimiterMatch : boolean= false;// Used to check if custoem delimiter availiable.
+  customDelimiterMatch: any = false;// Used to check if custoem delimiter availiable.
 
   readonly regex = /^(\d+([,\n]\d+)*)$/;
 
@@ -38,30 +38,44 @@ export class CalculatorUIComponent implements OnInit {
   }
 
   add(a: string): any {
-    a = a.replaceAll('\\n','\n');
+    a = a.replaceAll('\\n', '\n');
     this.Result = '';
     this.ResultNum = 0;
     let splitted: string[] = [];
+    let delimiter = /,|\n/; // Default delimiters: ',' or '\n'
+
     //Check if string is not empty
     if (a.length > 1) {
-      if (this.customDelimiterMatch){
-        //Code for cutome delimiter
-      } else {
-        if (this.checkString(a)) {
-          // splitted = a.split(','); 
-          splitted = a.split(/[,\n]+/);
-          // Split String using \n and comma any of this
+      if (a.startsWith("//")) {
+        const match = a.match(/^\/\/(.+)\n/); // Regex to extract custom delimiter
+        if (match) {
+          delimiter = new RegExp(match[1]); // Use the captured delimiter
+          a = a.substring(match[0].length); // Remove delimiter declaration
+          splitted = a.split(delimiter); // Split the string using the determined delimiter
           splitted.forEach(item => {
-            this.ResultNum += parseInt(item);
+            this.ResultNum += parseInt(item); // Sum up the numbers
           });
           this.Result = this.ResultNum.toString();
           this.ShowResult = true;
           return this.Result;
         } else {
-          this.Result = 'Invalid String';
+          this.Result = 'Invalid Syntax for Custom Delimiter';
           this.ShowResult = true;
-          return 'Invalid String';
+          return 'Invalid Syntax for Custom Delimiter';
         }
+      } else if (this.checkString(a)) {
+        splitted = a.split(/[,\n]+/); // Split String using , and \n any of this
+        // Split String using \n and comma any of this
+        splitted.forEach(item => {
+          this.ResultNum += parseInt(item);
+        });
+        this.Result = this.ResultNum.toString();
+        this.ShowResult = true;
+        return this.Result;
+      } else {
+        this.Result = 'Invalid String';
+        this.ShowResult = true;
+        return 'Invalid String';
       }
 
     }
