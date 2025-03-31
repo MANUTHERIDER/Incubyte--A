@@ -54,9 +54,9 @@ describe('CalculatorUIComponent', () => {
     const result = component.add('1,3\n4,5\h6');
     expect(result).toBe('Invalid String');
   });
-  // it('Check string to be invalid for any other seperator except for comma and next line escape sequence', () => {
-  //   const result = component.checkString('1,3\h4');
-  //   expect(result).toBe(true);
-  // });
-
+  // Step 4 Support different delimiters: 
+  it('Check custome delimeters used ', () => {
+    const result = component.add('//%\n1%2%3\n4%5');
+    expect(result).toBe(true);
+  });
 });

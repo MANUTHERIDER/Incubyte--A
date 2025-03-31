@@ -16,10 +16,12 @@ import { NgIf } from '@angular/common';
 })
 export class CalculatorUIComponent implements OnInit {
 
-  inputTextValue: string = '';
-  Result: string = '';
-  ResultNum: number = 0;
-  ShowResult: boolean = false;
+  inputTextValue: string = ''; // Get inpurt text
+  Result: string = '';// Calculate result
+  ResultNum: number = 0;// Show result
+  ShowResult: boolean = false;// Show result element only when availiable
+  customDelimiterMatch : boolean= false;// Used to check if custoem delimiter availiable.
+
   readonly regex = /^(\d+([,\n]\d+)*)$/;
 
 
@@ -42,21 +44,26 @@ export class CalculatorUIComponent implements OnInit {
     let splitted: string[] = [];
     //Check if string is not empty
     if (a.length > 1) {
-      if (this.checkString(a)) {
-        // splitted = a.split(','); 
-        splitted = a.split(/[,\n]+/);
-        // Split String using \n and comma any of this
-        splitted.forEach(item => {
-          this.ResultNum += parseInt(item);
-        });
-        this.Result = this.ResultNum.toString();
-        this.ShowResult = true;
-        return this.Result;
+      if (this.customDelimiterMatch){
+        //Code for cutome delimiter
       } else {
-        this.Result = 'Invalid String';
-        this.ShowResult = true;
-        return 'Invalid String';
+        if (this.checkString(a)) {
+          // splitted = a.split(','); 
+          splitted = a.split(/[,\n]+/);
+          // Split String using \n and comma any of this
+          splitted.forEach(item => {
+            this.ResultNum += parseInt(item);
+          });
+          this.Result = this.ResultNum.toString();
+          this.ShowResult = true;
+          return this.Result;
+        } else {
+          this.Result = 'Invalid String';
+          this.ShowResult = true;
+          return 'Invalid String';
+        }
       }
+
     }
     //Check if string has only one string
     else if (a.length == 1) {
