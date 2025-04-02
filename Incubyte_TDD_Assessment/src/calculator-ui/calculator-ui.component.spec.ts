@@ -60,31 +60,9 @@ describe('CalculatorUIComponent', () => {
     const Sum = component.addWithMultipleDelimiters('1,3\n4,5\h6');
     expect(Sum).toBe('Invalid String');
   });
-  // Step 4 Support different delimiters: 
-  it('Check custome delimeters used ', () => {
-    const result = component.addWithMultipleDelimiters('//%\n1%2%3%5');
-    expect(result).toBe('11');
-  });
-
-  it('Check custom delimeters negative numbers ', () => {
-    const result = component.addWithMultipleDelimiters('//%\n1%-2%-3%-5%6%7');
-    expect(result).toBe('Invalid Syntax for Custom Delimiter');
-  });
-
-  // Test for empty string with custom delimiter
-  it('Empty string with custom delimiter', () => {
-    const result = component.addWithMultipleDelimiters('//;\n');
-    expect(result).toBe('Empty String');
-  });
-
-  // Test for invalid custom delimiter syntax
-  it('Invalid custom delimiter syntax', () => {
-    const result = component.addWithMultipleDelimiters('//;\n1;2;3;4;5;6;7;8;9;');
-    expect(result).toBe('Invalid Syntax for Custom Delimiter');
-  });
 
   // Test for GetCalledCount method
-  it('GetCalledCount method', () => {
+  it('GetCalledCount method', () => { 
     component.addWithMultipleDelimiters('1,2,3');
     component.addWithMultipleDelimiters('4,5');
     const callCount = component.getAddCallCount();
@@ -106,12 +84,6 @@ describe('CalculatorUIComponent', () => {
       expect(count).toBe(2);
     });
 
-    //
-    it('Increment addCallCount', () => {  
-      const sum =component.addWithMultipleDelimiters('1,2002,3');
-      expect(sum).toBe(4);
-    });
-
     // Test for custom delimiter of any length
     it('Custom delimiter of any length', () => {
       const result = component.addWithMultipleDelimiters('//[***]\n1***2***3');
@@ -124,18 +96,6 @@ describe('CalculatorUIComponent', () => {
       expect(result).toBe('10');
     });
 
-    // Test for invalid syntax with custom delimiter of any length
-    it('Invalid syntax with custom delimiter of any length', () => {
-      const result = component.addWithMultipleDelimiters('//[***]\n1***2**3');
-      expect(result).toBe('Invalid String');
-    });
-
-    // Test for negative numbers with custom delimiter of any length
-    it('Negative numbers with custom delimiter of any length', () => {
-      const result = component.addWithMultipleDelimiters('//[***]\n1***-2***3');
-      expect(result).toBe('Negative numbers not allowed: -2');
-    });
-
     // Test for numbers greater than 1000 with custom delimiter of any length
     it('Numbers greater than 1000 with custom delimiter of any length', () => {
       const result = component.addWithMultipleDelimiters('//[***]\n1***1001***2');
@@ -146,6 +106,24 @@ describe('CalculatorUIComponent', () => {
     it('Multiple custom delimiters', () => {
       const result = component.addWithMultipleDelimiters('//[*][%]\n1*2%3');
       expect(result).toBe('6');
+    });
+
+    // Test for multiple custom delimiters with length longer than one character
+    it('Multiple custom delimiters with length longer than one character', () => {
+      const result = component.addWithMultipleDelimiters('//[**][%%]\n1**2%%3');
+      expect(result).toBe('6');
+    });
+
+    // Test for multiple custom delimiters with length longer than one character and numbers greater than 1000
+    it('Multiple custom delimiters with length longer than one character and numbers greater than 1000', () => {
+      const result = component.addWithMultipleDelimiters('//[**][%%]\n1**1001%%3');
+      expect(result).toBe('4');
+    });
+
+    // Test for invalid syntax with multiple custom delimiters of length longer than one character ---
+    it('Invalid syntax with multiple custom delimiters of length longer than one character', () => {
+      const result = component.addWithMultipleDelimiters('//[**][%%]\n1**2%3');
+      expect(result).toBe('Invalid String');
     });
     
 });

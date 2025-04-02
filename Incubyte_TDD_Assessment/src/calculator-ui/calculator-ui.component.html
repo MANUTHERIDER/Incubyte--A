@@ -6,6 +6,7 @@
     </mat-form-field>
     <button mat-raised-button (click)="addWithMultipleDelimiters(TextValue.value)">Submit</button>
     <p class="para" *ngIf="ShowResult">Result : {{Result}}</p>
+    <p class="para" *ngIf="ShowResult">Add Call Count : {{getAddCallCount()}}</p>
 </form>
 <script src="jasmine.js"></script>
 <script src="jasmine-html.js"></script>
