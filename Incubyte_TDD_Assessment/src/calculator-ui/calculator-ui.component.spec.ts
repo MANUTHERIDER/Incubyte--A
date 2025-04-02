@@ -87,7 +87,7 @@ describe('CalculatorUIComponent', () => {
   it('GetCalledCount method', () => {
     component.add('1,2,3');
     component.add('4,5');
-    const callCount = component.GetCalledCount();
+    const callCount = component.getAddCallCount();
     expect(callCount).toBe(2);
   });
 
