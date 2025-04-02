@@ -76,7 +76,10 @@ export class CalculatorUIComponent {
             this.ShowResult = true;
           } else {
             splitted.forEach(item => {// Iterate through the splitted array
-              this.ResultNum += parseInt(item); // Sum up the numbers
+              // Check if the item is a number and less than or equal to 1000
+              if (parseInt(item) <= 1000) {
+                this.ResultNum += parseInt(item); // Sum up the numbers
+              }
             });
             this.Result = this.ResultNum.toString();
             this.ShowResult = true;
