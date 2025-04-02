@@ -23,12 +23,10 @@ export class CalculatorUIComponent implements OnInit {
   customDelimiterMatch: any = false;// Used to check if custoem delimiter availiable.
   isNegativeFound: any; // Used to check if negative numbers are present in the string.
   readonly regex = /^(\d+([,\n]\d+)*)$/;
+  private addCallCount: number = 0;
 
 
-  ngOnInit() {
-    this.ShowResult = false;
-  }
-
+  
   checkString(inputString: string): boolean {
     if (this.regex.test(inputString)) {
       return true;
@@ -41,13 +39,16 @@ export class CalculatorUIComponent implements OnInit {
     return SplittedValue.filter(num => num < 0);
 }
 
+
+ 
+
   add(a: string): any {
     a = a.replaceAll('\\n', '\n');
     this.Result = '';
     this.ResultNum = 0;
     let splitted: string[] = [];
     let delimiter = /,|\n/; // Default delimiters: ',' or '\n'
-
+  
     //Check if string is not empty
     if (a.length > 1) {
       if (a.startsWith("//")) {
