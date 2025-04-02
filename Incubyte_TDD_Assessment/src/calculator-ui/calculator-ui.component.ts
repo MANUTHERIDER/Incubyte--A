@@ -44,7 +44,8 @@ export class CalculatorUIComponent {
       return false;
     }
   }
-
+// This method is used to find negative numbers in the input string.
+// It takes an array of numbers as input and returns an array of negative numbers.
    findNegativeNumbers(SplittedValue: number[]): number[] {
     return SplittedValue.filter(num => num < 0);
 }
@@ -53,29 +54,28 @@ export class CalculatorUIComponent {
 // It takes a string as input, checks for custom delimiters, and calculates the sum of the numbers.
   add(a: string): any {
     a = a.replaceAll('\\n', '\n');
-    this.Result = '';
-    this.ResultNum = 0;
-    let splitted: string[] = [];
+    this.Result = '';// Reset the result
+    this.ResultNum = 0;// Reset the result number
+    let splitted: string[] = [];// Array to hold the splitted string values
     let delimiter = /,|\n/; // Default delimiters: ',' or '\n'
     this.setAddCallCount(this.addCallCount + 1); // Increment the call count
     //Check if string is not empty
-    if (a.length > 1) {
-      if (a.startsWith("//")) {
-        // const match = a.match(/^\/\/(.+)\n/); // Regex to extract custom delimiter
-       //^\/\/(.+)\n(\d+(\1\d+)*)$
+    if (a.length > 1) {// Check if string is not empty
+      if (a.startsWith("//")) {// Check if string starts with custom delimiter       //^\/\/(.+)\n(\d+(\1\d+)*)$
         const match = a.match(/^\/\/(.+)\n(\d+(\1\d+)*)$/); // Regex to extract custom delimiter
-        if (match) {
+        if (match) {// Check if match is found
           delimiter = new RegExp(match[1]); // Use the captured delimiter
           // a = a.substring(match[1].length); // Remove delimiter declaration
-          a= a.substring(a.indexOf('\n'));
+          a= a.substring(a.indexOf('\n'));// Remove delimiter declaration
           splitted = a.split(delimiter); // Split the string using the determined delimiter
+          // Check for negative numbers in the splitted array
           this.isNegativeFound = this.findNegativeNumbers(splitted.map(item => parseInt(item)));
           if (this.isNegativeFound.length > 0) {
             this.Result = `Negative numbers not allowed: ${this.isNegativeFound.join(', ')}`;
             // this.Result = 'Negative numbers not allowed';
             this.ShowResult = true;
           } else {
-            splitted.forEach(item => {
+            splitted.forEach(item => {// Iterate through the splitted array
               this.ResultNum += parseInt(item); // Sum up the numbers
             });
             this.Result = this.ResultNum.toString();

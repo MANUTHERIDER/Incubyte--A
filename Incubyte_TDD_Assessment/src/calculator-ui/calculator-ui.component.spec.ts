@@ -105,4 +105,10 @@ describe('CalculatorUIComponent', () => {
       const count = component.getAddCallCount();
       expect(count).toBe(2);
     });
+
+    //
+    it('Increment addCallCount', () => {  
+      const sum =component.add('1,2002,3');
+      expect(sum).toBe(4);
+    });
 });
