@@ -4,7 +4,7 @@
         <mat-label>Enter your String</mat-label>
         <input matInput #TextValue [(ngModel)]="inputTextValue" placeholder="" type="text" name="inputTextValue">
     </mat-form-field>
-    <button mat-raised-button (click)="add(TextValue.value)">Submit</button>
+    <button mat-raised-button (click)="addWithMultipleDelimiters(TextValue.value)">Submit</button>
     <p class="para" *ngIf="ShowResult">Result : {{Result}}</p>
 </form>
 <script src="jasmine.js"></script>
