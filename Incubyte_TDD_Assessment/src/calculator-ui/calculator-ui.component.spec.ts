@@ -111,4 +111,34 @@ describe('CalculatorUIComponent', () => {
       const sum =component.add('1,2002,3');
       expect(sum).toBe(4);
     });
+
+    // Test for custom delimiter of any length
+    it('Custom delimiter of any length', () => {
+      const result = component.add('//[***]\n1***2***3');
+      expect(result).toBe('6');
+    });
+
+    // Test for multiple custom delimiters of any length
+    it('Multiple custom delimiters of any length', () => {
+      const result = component.add('//[***][%%]\n1***2%%3***4');
+      expect(result).toBe('10');
+    });
+
+    // Test for invalid syntax with custom delimiter of any length
+    it('Invalid syntax with custom delimiter of any length', () => {
+      const result = component.add('//[***]\n1***2**3');
+      expect(result).toBe('Invalid String');
+    });
+
+    // Test for negative numbers with custom delimiter of any length
+    it('Negative numbers with custom delimiter of any length', () => {
+      const result = component.add('//[***]\n1***-2***3');
+      expect(result).toBe('Negative numbers not allowed: -2');
+    });
+
+    // Test for numbers greater than 1000 with custom delimiter of any length
+    it('Numbers greater than 1000 with custom delimiter of any length', () => {
+      const result = component.add('//[***]\n1***1001***2');
+      expect(result).toBe('3');
+    });
 });
