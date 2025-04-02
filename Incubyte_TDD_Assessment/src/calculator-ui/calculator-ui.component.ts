@@ -111,7 +111,6 @@ export class CalculatorUIComponent {
     let splitted: string[] = []; // Array to hold the split string values
     let delimiter = /,|\n/; // Default delimiters: ',' or '\n'
     this.setAddCallCount(this.addCallCount + 1); // Increment the call count
-
     if (a.length > 1) { // Check if string is not empty
       if (a.startsWith("//")) { // Check if string starts with custom delimiter
         const match = a.match(/^\/\/(\[.+\])+\n(.*)$/); // Regex to extract multiple custom delimiters

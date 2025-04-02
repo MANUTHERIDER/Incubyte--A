@@ -141,4 +141,11 @@ describe('CalculatorUIComponent', () => {
       const result = component.addWithMultipleDelimiters('//[***]\n1***1001***2');
       expect(result).toBe('3');
     });
+
+    // Test for multiple custom delimiters
+    it('Multiple custom delimiters', () => {
+      const result = component.addWithMultipleDelimiters('//[*][%]\n1*2%3');
+      expect(result).toBe('6');
+    });
+    
 });
