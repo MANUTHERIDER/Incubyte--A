@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
   templateUrl: './calculator-ui.component.html',
   styleUrl: './calculator-ui.component.css'
 })
-export class CalculatorUIComponent implements OnInit {
+export class CalculatorUIComponent {
 
   inputTextValue: string = ''; // Get inpurt text
   Result: string = '';// Calculate result
@@ -26,7 +26,17 @@ export class CalculatorUIComponent implements OnInit {
   private addCallCount: number = 0;
 
 
+  // Getters and Setters for addCallCount
+  // This is used to keep track of the number of times the add method is called.
+  getAddCallCount(): number {
+    return this.addCallCount;
+  }
+  setAddCallCount(count: number): void { 
+    this.addCallCount = count;
+   }
   
+   // Check if the input string is valid according to the regex pattern
+  // The regex pattern checks if the string contains only digits, commas, and newlines.
   checkString(inputString: string): boolean {
     if (this.regex.test(inputString)) {
       return true;
@@ -38,17 +48,16 @@ export class CalculatorUIComponent implements OnInit {
    findNegativeNumbers(SplittedValue: number[]): number[] {
     return SplittedValue.filter(num => num < 0);
 }
-
-
  
-
+// This method is used to add numbers from a string input.
+// It takes a string as input, checks for custom delimiters, and calculates the sum of the numbers.
   add(a: string): any {
     a = a.replaceAll('\\n', '\n');
     this.Result = '';
     this.ResultNum = 0;
     let splitted: string[] = [];
     let delimiter = /,|\n/; // Default delimiters: ',' or '\n'
-  
+    this.setAddCallCount(this.addCallCount + 1); // Increment the call count
     //Check if string is not empty
     if (a.length > 1) {
       if (a.startsWith("//")) {
